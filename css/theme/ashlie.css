@@ -1,0 +1,32 @@
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal .todo {
+    border: 2px solid #f06;
+}
+
+.reveal .todo:before {
+    content: 'to do';
+    display: block;
+    padding: 3px;
+    background: #f05;
+    color: #fff;
+    font-size: 18px;
+}
+
+body {
+    background: #b2edd0;
+    background: -moz-radial-gradient(center, circle cover, #f5f5f3 0%, #b2edd0 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f5f5f3), color-stop(100%, #b2edd0));
+    background: -webkit-radial-gradient(center, circle cover, #f5f5f3 0%, #b2edd0 100%);
+    background: -o-radial-gradient(center, circle cover, #f5f5f3 0%, #b2edd0 100%);
+    background: -ms-radial-gradient(center, circle cover, #f5f5f3 0%, #b2edd0 100%);
+    background: radial-gradient(center, circle cover, #f5f5f3 0%, #b2edd0 100%);
+    background-color: #f5f5f3; }
+
+.reveal {
+    font-family: 'Karla', sans-serif;
+    font-size: 36px;
+    font-weight: normal;
+    color: #231f20; }
