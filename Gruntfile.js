@@ -129,6 +129,9 @@ module.exports = function(grunt) {
 			},
 			html: {
 				files: [ 'index.html']
+			},
+			images: {
+				files: [ 'images/*.{svg,png,jpg}']
 			}
 		}
 

@@ -4,10 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
-
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<title>Including a frontend workflow within Drupal 7</title>
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -15,7 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
 		<link rel="stylesheet" href="css/theme/ashlie.css">
 
 		<!-- Code syntax highlighting -->
@@ -38,352 +35,896 @@
 	<body>
 
 		<div class="reveal">
+			<!--<p>We take a look at how Styleguide Driven Development, CSS preprocessors and build automation tools can be best fitted into the workflow of Drupal 7.-->
+
+				<!--What will be discussed?-->
+
+				<!--An overview of the state of Drupal 7 in comparison to the frontend workflow currently used today-->
+				<!--An overview of Styleguide Driven Design, including why and how you could be doing it-->
+				<!--Styleguide tools that can be incorporated into your Drupal build-->
+				<!--Using build automation tools eg. Grunt or Gulp in development workflow-->
+				<!--Addressing why these may be preferred over using Drupal modules that do the same thing-->
+				<!--Exploring how all of these combined will sit in the overall project architecture</p>-->
+
 
 			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides" data-notes="Notes in the data attribute">
+			<div class="slides">
 				<section>
-					<h2>Including a frontend workflow within a <br />14-year old CMS</h2>
-					<p>(Drupal 7, that is)</p>
+					<h1>Including a frontend workflow within Drupal 7</h1>
 
 					<aside class="notes">
 						<ul>
-							<li>I'm here today to talk to you about including a frontend workflow within a 14-year old CMS</li>
-							<li>Of course, I am talking about in Drupal 7</li>
+							<li>I'm going to talk today about how you can include a frontend workflow into your Drupal 7 sites</li>
+							<li>We're going to look at a custom theme built from the ground up</li>
+							<li>Not using a base theme</li>
+							<li>Completely from scratch</li>
 						</ul>
 					</aside>
 				</section>
 
 				<section>
 					<h2>Greetings!</h2>
-					<p>I'm <strong>Ashlie</strong>, <em>Frontend Developer</em> for The Inviqa Group</p>
-					<p class="todo"><em>Insert Inviqa logo here</em></p>
-
+					<p>Ashlie Webb, <strong>Frontend Developer</strong> for The Inviqa Group</p>
+					<div class="layout-table base-spacing">
+						<div class="table-cell">
+							<img src="images/inviqa-group.png" alt="Inviqa group" />
+						</div>
+						<div class="table-cell">
+							<div class="image-bg--dark"><object data="images/logo-ikos.svg" type="image/svg+xml" id="logo-ikos" class="svg-image"></object></div>
+						</div>
+					</div>
 					<aside class="notes">
 						<ul>
 							<li>Firstly, let me introduce myself. My name is Ashlie</li>
 							<li>I'm a frontend developer and have been for the past 6 years</li>
-							<li>I currently work for the Inviqa Group</li>
-						</ul>
-					</aside>
-
-				</section>
-
-				<section>
-					<h3>Who is a part of<br />the Inviqa Group?</h3>
-					<p class="fragment todo"><em>Insert image of Inviqa group brands</em></p>
-					<p class="fragment todo">
-						Experts in the following:
-						<br />
-						<em>Insert image of platform each brand is expert in</em>
-					</p>
-
-					<aside class="notes">
-						<ul>
-							<li>Explain Inviqa Group brands</li>
-							<li>Explain that each brand has a specialist platform</li>
-							<li>And of course iKOS which I'm sure you've heard of by now</li>
+							<li>I currently work for the Inviqa Group, which includes 4 companies creating online solutions using various technology, one of those being iKOS who as I'm sure you might know by now are our Drupal experts</li>
 						</ul>
 					</aside>
 				</section>
 
 				<section>
-					<h2>Why go on about this?</h2>
-					<p class="fragment">Frontend developers work on a number of systems</p>
-					<p class="fragment"><strong>Our frontend workflow needs to be adaptable</strong></p>
+					<h2>The role</h2>
+					<p class="fragment">Frontend developers work on any number of systems</p>
+					<p class="fragment">Our workflow needs to be relatable, adaptable, transferrable</p>
+					<p class="fragment">We are crafters of the UI</p>
 
 					<aside class="notes">
 						<ul>
 							<li>Because I'm a FE developer I am expected to work on number different systems</li>
 							<li>In fact I do switch between Magento, Symfony2 and Drupal</li>
-							<li><em>Next fragment</em></li>
-							<li>And because of this it's important to have a workflow in place that is transferable</li>
+							<li><em>Next</em></li>
+							<li>And because of this it's important to have a workflow in place that is relatable, adaptable and ultimately transferable</li>
+							<li><em>Next</em></li>
+							<li>We are crafters of the UI. We love to shape a website, taking it from a blank page and using the many techniques and tools we have to create digital bliss</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Web app Architecture</h2>
+					<p class="icon icon-picture">Presentation</p>
+					<p class="icon icon-settings xl-base-spacing">Logic</p>
+					<p class="icon icon-data xl-base-spacing">Data</p>
+
+					<aside class="notes">
+						<ul>
+							<li>This is how we can usually expect our applications to be formed</li>
+							<li>We have our layers; data, logic and presentation</li>
+							<li>Today I'll be talking explicitly about the Presentation layer</li>
+							<li>Aka the UI, frontend, the stuff that looks pretty</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>What's on the agenda?</h2>
+					<p class="fragment">
+						<strong>How does Drupal 7 do frontend?</strong>
+						<span><br />theme.info, template.php</span>
+					</p>
+					<p class="fragment">
+						<strong>CSS Pre-processors</strong>
+						<span><br /> Sass, LESS, Stylus, Myth</span>
+					</p>
+					<p class="fragment">
+						<strong>Frontend Build Automation</strong>
+						<span><br />Grunt, Gulp, Broccoli, Brunch</span>
+					</p>
+					<p class="fragment">
+						<strong>Styleguide Driven Development</strong>
+						<span><br />Patternlab, KSS Node, Hologram</span>
+					</p>
+
+					<aside class="notes">
+						<ul>
+							<li>Let's have a look at the things I'll be discussing today</li>
+							<li></li>
+
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h1>How does Drupal 7 do frontend?</h1>
+				</section>
+
+				<section>
+					<h2>theme.inc</h2>
+					<p>Declare what goes in your theme eg. css, js, regions etc</p>
+					<pre><code>
+; Information
+name = My Theme
+description = The default theme for My Theme
+
+; Versions
+version = 7.x-0.1
+core = 7.x
+
+; Template engine
+engine = phptemplate
+
+; Stylesheets
+stylesheets[all][] = css/styles.css
+
+; Scripts
+scripts[] = js/app/header-user-menu.js
+scripts[] = js/app/header-search.js
+
+; Regions
+regions[header] = Header
+regions[help] = Footer
+					</code></pre>
+				</section>
+
+				<!--<section data-background-image="http://i.giphy.com/PUBxelwT57jsQ.gif" style="color: #fff;">-->
+					<!--<h2 style="color: #fff;">CSS @import</h2>-->
+					<!--<p>WHAT?! You're joking, right? Wait, <em>seriously</em>?</p>-->
+				<!--</section>-->
+
+				<section>
+					<h2>template.php</h2>
+					<p>Making alterations to the theme (theme hooks)</p>
+
+					<aside class="notes">
+						<ul>
+							<li>This is where you take a function from core Drupal, copy it in here and change it to suit your theme</li>
+							<li>This is a great example of how blurred the lines are between a frontend and a backend in Drupal 7</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>CSS from contrib modules</h2>
+					<p>How we resolve the issues that come with this?</p>
+					<pre><code>
+stylesheets[all][] = css/overrides/date.css
+stylesheets[all][] = css/overrides/system.menus.css
+stylesheets[all][] = css/overrides/system.messages.css
+stylesheets[all][] = css/overrides/system.theme.css
+stylesheets[all][] = css/overrides/user.css
+stylesheets[all][] = css/overrides/views.css
+					</code></pre>
+					
+					<aside class="notes">
+						<ul>
+							<li>Defo keep these out of sass - doesn't feel right</li>
+							<li>want to override these kept an overrides directory</li>
+							<li>They may be useful but more than likely we don't want this styling in our custom theme</li>
+							<li>to comply with file naming and ensure Drupal knew the override file existed</li>
+							<li>went with a blank file sometimes and then wrote custom css for theme</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Javascript</h2>
+					<p>Can be added to theme.inc, template.php and custom modules</p>
+
+					<aside class="notes">
+						<ul>
+							<li><em>Explain</em></li>
+							<li>Managable</li>
+							<li>Have seen - js ditch in core and moved to Grunt</li>
+						</ul>
+					</aside>
+				</section>
+
+				<!--<section>-->
+					<!--<h3>How can we work around this?</h3>-->
+					<!--<p>We don't develop in aggregation mode is what we develop in</p>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<ul class="todo">-->
+						<!--<li>@import - eek</li>-->
+						<!--<li>Overriding contrib module css-->
+							<!--<ul>-->
+								<!-- -->
+							<!--</ul>-->
+						<!--</li>-->
+						<!--<li>theme.info</li>-->
+						<!--<li>template.php</li>-->
+						<!--<li>Javascript</li>-->
+						<!--<li>Legacy browser support - the dreaded IE8</li>-->
+					<!--</ul>-->
+				<!--</section>-->
+
+				<section>
+					<h3>Using a CSS Pre-processor</h3>
+					<p><strong>What options does Drupal give us?</strong></p>
+					<p>SASS / SCSS<br />
+						<span class="reference">https://www.drupal.org/project/sass</span>
+					</p>
+					<p>Compass stylesheet tool<br />
+						<span class="reference">https://www.drupal.org/project/compass</span>
+					</p>
+					<p>Less CSS Preprocessor<br />
+						<span class="reference">https://www.drupal.org/project/less</span>
+					</p>
+					<p>Stylus CSS Preprocessor<br />
+						<span class="reference">https://www.drupal.org/project/stylus</span>
+					</p>
+
+					<aside class="notes">
+						<ul>
+							<li>Here we have a collection of contrib modules available</li>
+							<li>I've got nothing against using them. They get the job done after all</li>
+							<li>There are a points against these when we look again at the goal for keeping our theme in the presentation layer</li>
+							<li>So let's reassess</li>
+						</ul>
+					</aside>
+
+				</section>
+
+				<section>
+					<h3>What other options are there?</h3>
+					<p class="fragment"><strong>Node.js and NPM</strong></p>
+					<p class="fragment"><strong>Build automation script</strong><br />
+					Grunt or Gulp</p>
+					<p class="fragment"><strong>.. and combine with <em>insert pre-processor of choice</em></strong><br />
+					eg. grunt-contrib-sass or gulp-sass</p>
+
+					<aside class="notes">
+						<ul>
+							<li><em>Talk through</em></li>
+							<li>Audience: Used any of these in their Drupal 7 site?</li>
+							<li>Audience: Using because it was part of a base theme?</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Let's take a quick look</h3>
+					<pre><code class="javascript" data-trim contenteditable>
+sass: {
+  dist: {
+    options: {
+      loadPath: [
+        'docroot/sites/all/my-site/themes/custom/my-theme/css/sass',
+        'node_modules/bourbon/app/assets/stylesheets',
+        'node_modules/neat/app/assets/stylesheets'
+      ]
+    },
+    files: {
+      'docroot/sites/all/my-site/themes/custom/my-theme/css/style.css': 'docroot/sites/all/my-site/themes/custom/my-theme/css/style.scss'
+    }
+  }
+}
+					</code></pre>
+
+					<aside class="notes">
+						<ul>
+							<li>This is an example taken from a gruntfile</li>
+							<li>Written in json and basically it's a config file</li>
+							<li>Gruntfile is usually seen to be stored in the root directory but if you have multiple sites running you will want to place it in the theme directory</li>
+							<li>It tells the package which files it should to build depending on it's purpose, along with various options you can set</li>
+							<li>You'll notice there is file path here in the loadPath</li>
+							<li>This is how we include any CSS framework we might use for our custom theme</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Sass Libraries</h3>
+					<h4>Mixins, grids and functions</h4>
+					<p>Bourbon <span class="reference">http://bourbon.io/</span></p>
+					<p>Compass <span class="reference">http://compass-style.org/</span></p>
+					<p>Neat <span class="reference">http://neat.bourbon.io/</span></p>
+					<p>Suzy <span class="reference">http://susy.oddbird.net/</span></p>
+
+					<aside class="notes">
+						<ul>
+							<li>We can use npm packages to store the library code locally while developing</li>
+							<li>It stays out of the codebase but still gets compiled into our theme css</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Separating the UI <br />from Drupal logic</h3>
+					<p>Keeping frontend development tools together in our custom theme</p>
+					<p>Each theme has it's own <span class="underline">gruntfile.js</span> or <span class="underline">gulpfile.js</span> setup</p>
+
+					<aside class="notes">
+						<ul>
+							<li>Main of using these tools is separate our frontend workflow from the Drupal logic</li>
+							<li>Already mentioned - gruntfile can be used per theme</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Hmm right, is that it?</h3>
+					<p>What else can we do with Grunt?</p>
+					<h2 class="fragment">Add more tasks! Yay!</h2>
+
+					<aside class="notes">
+						<ul>
+							<li>We want our frontend tools, the automated stuff all in one place. That's why we love Grunt</li>
 							<li></li>
 						</ul>
 					</aside>
 				</section>
 
 				<section>
-					<h2>Layers of a web app</h2>
-					<p class="todo"><em>Insert image of web app layers</em></p>
-				</section>
-
-				<section>
-					<h2>The frontend layer in Drupal 7</h2>
-					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+					<h3>Some ideas to get started</h3>
+					<p><strong>Auto-prefixer</strong><br />
+						Add browser prefixing base on data from caniuse.com
 					</p>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
-
-				<section>
-					<section id="fragments">
-						<h2>Fragments</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
-
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's different types of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=slide#/transitions">Slide</a> -
-						<a href="?transition=convex#/transitions">Convex</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a>
+					<p><strong>Live reload</strong><br />
+						Automatically reloads your browser window when changes are made
 					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						reveal.js comes with a few themes built in: <br>
-						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
+					<p><strong>Strip media queries</strong><br />
+						For IE8 support, generates new stylesheet with desktop only styles
 					</p>
 				</section>
 
 				<section>
-					<section data-background="#dddddd">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Tiled Backgrounds</h2>
-						<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-							<h2>Video Backgrounds</h2>
-							<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-						</div>
-					</section>
-					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-						<h2>... and GIFs!</h2>
-					</section>
-				</section>
-
-				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-					</p>
-					<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-				</section>
-
-				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						You can override background transitions per-slide.
-					</p>
-					<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-				</section>
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code class="hljs" data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-				<section>
-					<h2>Marvelous List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section>
-					<h2>Tabular Tables</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Value</th>
-								<th>Quantity</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Apples</td>
-								<td>$1</td>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>Lemonade</td>
-								<td>$2</td>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>Bread</td>
-								<td>$3</td>
-								<td>2</td>
-							</tr>
-						</tbody>
-					</table>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
+					<h3>More build tasks</h3>
+					<p><em>This time for SVGs..</em></p>
+					<p><strong>Grunticon</strong><br />
+						Generate svg icons for use on elements by way of adding a class
+					<p><strong>SVG min</strong><br />
+						Minimize and clean up the svg files before they are used
 					</p>
 				</section>
 
+				<!--<section>-->
+					<!--<h3>Supporting legacy browsers</h3>-->
+					<!--<h4 class="fragment"></h4>-->
+
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h3>Why use @import?</h3>-->
+					<!--<blockquote>@import is used only in non-CSS aggregation mode. This is done to workaround IE limitation with the number of style tags.<cite>Damien Tournoud, Drupal.org member</cite></blockquote>-->
+
+					<!--<p class="reference">Resources:</p>-->
+					<!--<ul class="reference">-->
+						<!--<li>-->
+							<!--http://drupal.stackexchange.com/questions/3807/why-does-drupal-7-prefer-css-import-rules-to-link-tags-->
+						<!--</li>-->
+						<!--<li>https://www.drupal.org/node/171209</li>-->
+						<!--<li>http://e9p.net/disable-import-tags-stylesheets-while-development-drupal</li>-->
+					<!--</ul>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h3>Reasons why we should not use import for our CSS</h3>-->
+					<!--<p><em>From the Yahoo! developer network</em></p>-->
+					<!--<p><strong>Best Practices for Speeding Up Your Web Site</strong></p>-->
+					<!--<p>... best practices states that CSS should be at the top in order to allow for progressive rendering.</p>-->
+					<!--<p>In IE @import behaves the same as using &lt;link&gt; at the bottom of the page, so it's best not to use it.</p>-->
+					<!--<p class="reference">Reference: https://developer.yahoo.com/performance/rules.html#csslink=</p>-->
+				<!--</section>-->
+
 				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
+					<h3>Styleguide Driven Design</h3>
+					<blockquote>We're not designing pages, we're designing systems of components.<cite>Stephen Hay</cite></blockquote>
+					<p><em>Known under a couple psuedonyms..</em></p>
+					<p class="fragment">Pattern library</p>
+					<p class="fragment">Component-led design</p>
+					<p class="fragment">Style guide / Style guidelines / Brand guidelines</p>
+				</section>
+
+				<section>
+					<h3>In theory: Atomic Design</h3>
+					<img src="images/atomic-design.png" alt="Atomic Design" class="image-border" />
 
 					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+						<ul>
+							<li>The best guide to theory of this is Atomic Design</li>
+							<li>Explain how it breaks down</li>
+						</ul>
 					</aside>
 				</section>
 
 				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+					<h3>Tools we use in practice</h3>
+					<p>Patternlab <span class="reference">http://patternlab.io/</span></p>
+					<p>KSS Node <span class="reference">http://kss-node.github.io/kss-node/</span></p>
+					<p>Hologram <span class="reference">http://trulia.github.io/hologram/</span></p>
+
+					<aside class="notes">
+						<p><strong>Patternlab</strong></p>
+						<ul>
+							<li>a tool built completely off the back of the theory of Atomic Design</li>
+							<li>Standalone, you can create a entire UI in patternlab and do whatever you want with it afterwards</li>
+						</ul>
+						<p><strong>KSS</strong></p>
+						<ul>
+							<li>I've heard this is gaining some interest in the Drupal community</li>
+							<li>While I haven't used this one specifically this type of implementation appeals more to me because it has obvious benefits</li>
+							<li>Documentation sits right next to your code</li>
+							<li>Better organisation</li>
+							<li>All tools have grunt/gulp tasks, can be automated, generated while developing</li>
+						</ul>
+					</aside>
 				</section>
 
 				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
+					<h3>But what about the markup Drupal 7 gives us?</h3>
+					<img src="images/drupal7-markup.png" alt="Drupal 7 markup" />
+
+					<aside class="notes">
+						<ul>
+							<li>This is for a paragraph and a link</li>
+							<li>Pretty bloated, some useful stuff but not ideal</li>
+							<li>That's fine - we've accepted that of Drupal 7</li>
+						</ul>
+					</aside>
 				</section>
 
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+				<section>
+					<h2>Applying SDD to Drupal 7</h2>
+					<p class="big">Enter... @extend!</p>
+				</section>
+
+				<section>
+					<h3>Sass Directory Structure</h3>
+					<p class="directory">
+						<span class="icon icon-folder">sass</span>
+						<span class="icon icon-folder sub-directory">base</span>
+						<span class="icon icon-folder sub-directory highlight-blue fragment">components</span>
+						<span class="icon icon-folder sub-directory">helpers</span>
+						<span class="icon icon-folder sub-directory">icons</span>
+						<span class="icon icon-folder sub-directory highlight-blue fragment">layout</span>
+						<span class="icon icon-folder sub-directory">objects</span>
+
 					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
+					<p class="reference">* Based on ITCSS by Harry Roberts http://csswizardry.com/</p>
+
+					<aside class="notes">
+						<ul>
+							<li>What we're going to focusing on here is the components/ and layout/ directories</li>
+							<li>The aptly named components directory will likely contain the buttons, teasers, menus, header, footer. Anything that correclates to your website's design</li>
+							<li>And the layouts directory serves well for the wonderful Drupal 7 markup</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h4>sass/<span class="underline">components</span>/related-news.scss</h4>
+					<pre><code class="hljs scss">
+$related-news-bg: $base-color-bg;
+$related-news-link: $color-secondary-highlight;
+$related-news-link-active: $color-primary;
+
+.related-news {
+  background-color: $related-news-bg;
+  margin-bottom: 30px;
+
+  @include media(get-layout(large)) {
+    @include span-columns(6 of 12);
+    @include omega(2n);
+    margin-bottom: 0;
+  }
+}
+
+.related-news__image {
+    height: 362px;
+    overflow: hidden;
+
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+  }
+}
+
+.related-news__title {
+    padding: 30px 30px 0 30px;
+
+    h3 {
+      margin: 0;
+      min-height: 58px;
+    }
+
+    a {
+      color: $related-news-link;
+      text-decoration: none;
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $related-news-link-active;
+      }
+    }
+  }
+}
+
+.related-news__content {
+    padding: 0 30px 30px 30px;
+  }
+}
+
+.related-news__date {
+    padding: 0 30px;
+  }
+}
 					</code></pre>
 				</section>
 
 				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
+					<h4>sass/<span class="underline">layout</span>/related-news.scss</h4>
+					<pre><code class="hljs scss">
+.field-name-field-related-news {
+  > .field-items > .field-item {
+    @extend .related-news;
+  }
+
+  .field-name-field-image {
+    @extend .related-news__image;
+  }
+
+  .field-name-title {
+    @extend .related-news__title;
+  }
+
+  .field-name-post-date {
+    @extend .related-news__date;
+  }
+
+  .field-name-body {
+    @extend .related-news__content;
+  }
+}
+					</code></pre>
 				</section>
 
 				<section>
-					<h2>Much more</h2>
-					<ul>
-						<li>Right-to-left support</li>
-						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
-					</ul>
+					<h2>Why bother?</h2>
+					<h3>Drupal 8 is pretty much here</h3>
+					<p class="fragment">Continue support for sites remaining on Drupal 7</p>
+					<p class="fragment">Iterate on design incorporating SSD techniques</p>
+					<p class="fragment">Start to prepare your theme for Drupal 8 today</p>
+
+					<aside class="notes">
+						<ul>
+							<li>We've spent the last 4 years or so building sites using Drupal 7</li>
+							<li>We need to be able continue supporting them</li>
+							<li>Depending on site this frontend workflow can fit into an existing site</li>
+							<li>It takes 2-3 hours to set up a basic workflow with Grunt</li>
+						</ul>
+					</aside>
 				</section>
 
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
+				<section>
+					<h3>When the time comes</h3>
+					<p>.. and your moving your site to Drupal 8 your custom theme should slide into place</p>
+					<p class="fragment">Ok, not 100% perfectly but a good chunk of it will slide into place</p>
+
+					<aside class="notes">
+						<ul>
+							<li><em>Read slides</em></li>
+							<li>And then we get twig involved and a bit of Headless Drupal and it's all go</li>
+						</ul>
+					</aside>
 				</section>
+
+				<section>
+					<h3>Sass in Drupal 8</h3>
+					<p class="directory">
+						<span class="icon icon-folder">sass</span>
+						<span class="icon icon-folder sub-directory">base</span>
+						<span class="icon icon-folder sub-directory highlight-green fragment">components</span>
+						<span class="icon icon-folder sub-directory">helpers</span>
+						<span class="icon icon-folder sub-directory">icons</span>
+						<span class="icon icon-folder sub-directory highlight-red fragment">layout</span>
+						<span class="icon icon-folder sub-directory">objects</span>
+					</p>
+					<p class="fragment">Let's ditch the Drupal 7 layout directory</p>
+				</section>
+
+				<section>
+					<h3>To wrap it up</h3>
+					<p class="fragment">Use Node.js, NPM, Grunt, Gulp now!</p>
+					<p class="fragment">Keep it separate from the backend code and contained to a custom theme</p>
+					<p class="fragment">Start thinking and building in components not pages</p>
+					<p class="fragment">And get ready to relocate it all to Drupal 8 when the time comes</p>
+				</section>
+
+				<section>
+					<h3>Thank you for listening!</h3>
+					<h4>Any Questions?</h4>
+					<p>(Don't worry if you don't!)</p>
+					<br/>
+					<!--<p>Slides are available here:<br />-->
+						<!--http://ashliewebb.com/DCScot15</p>-->
+					<p>Ashlie Webb</p>
+					<p class="icon icon-twitter">@ashlie012</p>
+				</section>
+
+				<!--<section data-markdown>-->
+					<!--<script type="text/template">-->
+						<!--## Markdown support-->
+
+						<!--Write content using inline or external Markdown.-->
+						<!--Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).-->
+
+						<!--```-->
+						<!--<section data-markdown>-->
+						  <!--## Markdown support-->
+
+						  <!--Write content using inline or external Markdown.-->
+						  <!--Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).-->
+						<!--</section>-->
+						<!--```-->
+					<!--</script>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<section id="fragments">-->
+						<!--<h2>Fragments</h2>-->
+						<!--<p>Hit the next arrow...</p>-->
+						<!--<p class="fragment">... to step through ...</p>-->
+						<!--<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>-->
+
+						<!--<aside class="notes">-->
+							<!--This slide has fragments which are also stepped through in the notes window.-->
+						<!--</aside>-->
+					<!--</section>-->
+					<!--<section>-->
+						<!--<h2>Fragment Styles</h2>-->
+						<!--<p>There's different types of fragments, like:</p>-->
+						<!--<p class="fragment grow">grow</p>-->
+						<!--<p class="fragment shrink">shrink</p>-->
+						<!--<p class="fragment fade-out">fade-out</p>-->
+						<!--<p class="fragment current-visible">current-visible</p>-->
+						<!--<p class="fragment highlight-red">highlight-red</p>-->
+						<!--<p class="fragment highlight-blue">highlight-blue</p>-->
+					<!--</section>-->
+				<!--</section>-->
+
+				<!--<section id="transitions">-->
+					<!--<h2>Transition Styles</h2>-->
+					<!--<p>-->
+						<!--You can select from different transitions, like: <br>-->
+						<!--<a href="?transition=none#/transitions">None</a> - -->
+						<!--<a href="?transition=fade#/transitions">Fade</a> - -->
+						<!--<a href="?transition=slide#/transitions">Slide</a> - -->
+						<!--<a href="?transition=convex#/transitions">Convex</a> - -->
+						<!--<a href="?transition=concave#/transitions">Concave</a> - -->
+						<!--<a href="?transition=zoom#/transitions">Zoom</a>-->
+					<!--</p>-->
+				<!--</section>-->
+
+				<!--<section id="themes">-->
+					<!--<h2>Themes</h2>-->
+					<!--<p>-->
+						<!--reveal.js comes with a few themes built in: <br>-->
+						<!--&lt;!&ndash; Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. &ndash;&gt;-->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>-->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> - -->
+						<!--<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>-->
+					<!--</p>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<section data-background="#dddddd">-->
+						<!--<h2>Slide Backgrounds</h2>-->
+						<!--<p>-->
+							<!--Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.-->
+						<!--</p>-->
+						<!--<a href="#" class="navigate-down">-->
+							<!--<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">-->
+						<!--</a>-->
+					<!--</section>-->
+					<!--<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">-->
+						<!--<h2>Image Backgrounds</h2>-->
+						<!--<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>-->
+					<!--</section>-->
+					<!--<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">-->
+						<!--<h2>Tiled Backgrounds</h2>-->
+						<!--<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>-->
+					<!--</section>-->
+					<!--<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">-->
+						<!--<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">-->
+							<!--<h2>Video Backgrounds</h2>-->
+							<!--<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>-->
+						<!--</div>-->
+					<!--</section>-->
+					<!--<section data-background="http://i.giphy.com/90F8aUepslB84.gif">-->
+						<!--<h2>... and GIFs!</h2>-->
+					<!--</section>-->
+				<!--</section>-->
+
+				<!--<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">-->
+					<!--<h2>Background Transitions</h2>-->
+					<!--<p>-->
+						<!--Different background transitions are available via the backgroundTransition option. This one's called "zoom".-->
+					<!--</p>-->
+					<!--<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>-->
+				<!--</section>-->
+
+				<!--<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">-->
+					<!--<h2>Background Transitions</h2>-->
+					<!--<p>-->
+						<!--You can override background transitions per-slide.-->
+					<!--</p>-->
+					<!--<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Pretty Code</h2>-->
+					<!--<pre><code class="hljs" data-trim contenteditable>-->
+<!--function linkify( selector ) {-->
+  <!--if( supports3DTransforms ) {-->
+
+    <!--var nodes = document.querySelectorAll( selector );-->
+
+    <!--for( var i = 0, len = nodes.length; i &lt; len; i++ ) {-->
+      <!--var node = nodes[i];-->
+
+      <!--if( !node.className ) {-->
+        <!--node.className += ' roll';-->
+      <!--}-->
+    <!--}-->
+  <!--}-->
+<!--}-->
+					<!--</code></pre>-->
+					<!--<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Marvelous List</h2>-->
+					<!--<ul>-->
+						<!--<li>No order here</li>-->
+						<!--<li>Or here</li>-->
+						<!--<li>Or here</li>-->
+						<!--<li>Or here</li>-->
+					<!--</ul>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Fantastic Ordered List</h2>-->
+					<!--<ol>-->
+						<!--<li>One is smaller than...</li>-->
+						<!--<li>Two is smaller than...</li>-->
+						<!--<li>Three!</li>-->
+					<!--</ol>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Tabular Tables</h2>-->
+					<!--<table>-->
+						<!--<thead>-->
+							<!--<tr>-->
+								<!--<th>Item</th>-->
+								<!--<th>Value</th>-->
+								<!--<th>Quantity</th>-->
+							<!--</tr>-->
+						<!--</thead>-->
+						<!--<tbody>-->
+							<!--<tr>-->
+								<!--<td>Apples</td>-->
+								<!--<td>$1</td>-->
+								<!--<td>7</td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td>Lemonade</td>-->
+								<!--<td>$2</td>-->
+								<!--<td>18</td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td>Bread</td>-->
+								<!--<td>$3</td>-->
+								<!--<td>2</td>-->
+							<!--</tr>-->
+						<!--</tbody>-->
+					<!--</table>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Clever Quotes</h2>-->
+					<!--<p>-->
+						<!--These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">-->
+						<!--&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:-->
+					<!--</p>-->
+					<!--<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">-->
+						<!--&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would-->
+						<!--reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;-->
+					<!--</blockquote>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Intergalactic Interconnections</h2>-->
+					<!--<p>-->
+						<!--You can link between slides internally,-->
+						<!--<a href="#/2/3">like this</a>.-->
+					<!--</p>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Speaker View</h2>-->
+					<!--<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>-->
+					<!--<p>Press the <em>S</em> key to try it out.</p>-->
+
+					<!--<aside class="notes">-->
+						<!--Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).-->
+					<!--</aside>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Export to PDF</h2>-->
+					<!--<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>-->
+					<!--<iframe src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Global State</h2>-->
+					<!--<p>-->
+						<!--Set <code>data-state="something"</code> on a slide and <code>"something"</code>-->
+						<!--will be added as a class to the document element when the slide is open. This lets you-->
+						<!--apply broader style changes, like switching the page background.-->
+					<!--</p>-->
+				<!--</section>-->
+
+				<!--<section data-state="customevent">-->
+					<!--<h2>State Events</h2>-->
+					<!--<p>-->
+						<!--Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.-->
+					<!--</p>-->
+					<!--<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">-->
+<!--Reveal.addEventListener( 'customevent', function() {-->
+	<!--console.log( '"customevent" has fired' );-->
+<!--} );-->
+					<!--</code></pre>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Take a Moment</h2>-->
+					<!--<p>-->
+						<!--Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.-->
+					<!--</p>-->
+				<!--</section>-->
+
+				<!--<section>-->
+					<!--<h2>Much more</h2>-->
+					<!--<ul>-->
+						<!--<li>Right-to-left support</li>-->
+						<!--<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>-->
+						<!--<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>-->
+						<!--<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>-->
+						<!--<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>-->
+					<!--</ul>-->
+				<!--</section>-->
+
+				<!--<section style="text-align: left;">-->
+					<!--<h1>THE END</h1>-->
+					<!--<p>-->
+						<!--<!-&#45;&#45; <a href="http://slides.com">Try the online editor</a> <br>&ndash;&gt;-->
+						<!--<!-&#45;&#45; <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>&ndash;&gt;-->
+					<!--</p>-->
+				<!--</section>-->
 
 			</div>
 
